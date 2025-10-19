@@ -18,4 +18,6 @@ export interface SharedSelectProps {
 
 export interface SelectProps extends SharedSelectProps {
   options: OptionType[];
+  searchable?: boolean;
+  searchPlaceholder?: string;
 }

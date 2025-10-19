@@ -2,13 +2,15 @@
 
 import { memo, useCallback } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import NextLink from "next/link";
-import { Button } from "@/components/ui/button";
 import { LogOut, Bell } from "lucide-react";
+import { useTranslation } from 'react-i18next';
+import { Button } from "@/components/ui/button";
 import api from "@/lib/axios";
 import { ThemeToggle } from "@/components/theme/themeToggle";
+import LanguageToggle from "@/components/language-toggle"
 import useAuth from "@/components/auth/hooks/useAuth";
-import { useRouter } from "next/navigation";
 
 interface HeaderTitleProps {
     pageTitle: string
@@ -17,6 +19,7 @@ interface HeaderTitleProps {
 const Header = ({ pageTitle }: HeaderTitleProps) => {
     const router = useRouter()
     const { refetch: refetchAuth } = useAuth();
+    const { t } = useTranslation();
 
     const handleLogout = useCallback(async () => {
         await api.post('/auth/logout');
@@ -30,9 +33,9 @@ const Header = ({ pageTitle }: HeaderTitleProps) => {
                 <div className="flex justify-between items-center h-16">
                     <NextLink href="/home">
                         <div className="flex items-center space-x-4">
-                            <Image src="/logo.svg" alt="logo" width={40} height={40} />
+                            <Image src="/logo.png" className="rounded" alt="logo" width={40} height={40} />
                             <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                                {pageTitle}
+                                {t(pageTitle || "")}
                             </h1>
                         </div>
                     </NextLink>
@@ -40,7 +43,10 @@ const Header = ({ pageTitle }: HeaderTitleProps) => {
                         <button className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
                             <Bell className="h-5 w-5" />
                         </button>
-                        <ThemeToggle />
+                        <div className="flex gap-3">
+                            <ThemeToggle />
+                            <LanguageToggle />
+                        </div>
                         <Button
                             onClick={handleLogout}
                             variant="outline"
@@ -48,7 +54,7 @@ const Header = ({ pageTitle }: HeaderTitleProps) => {
                             className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800"
                         >
                             <LogOut className="h-4 w-4 mr-2" />
-                            Logout
+                            {t("lgt")}
                         </Button>
                     </div>
                 </div>

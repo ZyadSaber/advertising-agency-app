@@ -27,3 +27,75 @@ model user_information {
 
   user_role String?
 }
+
+model customers_information {
+  customer_id      Int      @id @default(autoincrement())
+  customer_name    String   @unique
+  customer_phone   String?
+  customer_address String?
+  active           Boolean? @default(true)
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+}
+
+model suppliers_information {
+  supplier_id       Int                @id @default(autoincrement())
+  supplier_name     String             @unique
+  supplier_phone    String?
+  supplier_address  String?
+  active            Boolean?           @default(true)
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @updatedAt
+  purchase_invoices purchase_invoice[]
+}
+
+model items_information {
+  item_id   Int      @id @default(autoincrement())
+  item_name String   @unique
+  active    Boolean? @default(true)
+
+  // Relations
+  purchase_invoice_details purchase_invoice_details[]
+}
+
+model purchase_invoice {
+  invoice_no    Int      @id @default(autoincrement())
+  invoice_date  DateTime
+  invoice_notes String?
+  supplier_id   Int
+
+  total_invoice        Decimal
+  discount             Decimal?
+  total_after_discount Decimal
+  paid                 Decimal?
+  unpaid               Decimal?
+
+  // Relations
+  supplier suppliers_information      @relation(fields: [supplier_id], references: [supplier_id])
+  details  purchase_invoice_details[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model purchase_invoice_details {
+  detail_invoice_no Int @id @default(autoincrement())
+  invoice_no        Int
+
+  item_no     Int
+  width       Decimal
+  height      Decimal
+  space       Decimal
+  quantity    Decimal
+  all_space   Decimal
+  price       Decimal
+  total_price Decimal
+  notes       String?
+
+  // Relations
+  invoice purchase_invoice  @relation(fields: [invoice_no], references: [invoice_no])
+  item    items_information @relation(fields: [item_no], references: [item_id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}

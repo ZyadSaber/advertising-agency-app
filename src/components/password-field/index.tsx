@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react"
+import { useTranslation } from 'react-i18next';
 import Input from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils"
@@ -25,6 +26,7 @@ const PasswordField = ({
     required,
     placeholder
 }: PasswordFieldProps) => {
+    const { t } = useTranslation();
     const [showPassword, setShowPassword] = useState(false)
 
     const handleShowPasswordChange = useCallback(() => {
@@ -41,7 +43,7 @@ const PasswordField = ({
             className
         )}>
             <Label htmlFor={name} className="text-sm font-medium">
-                {label}
+                {t(label || "")}
             </Label>
             <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />

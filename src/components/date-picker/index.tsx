@@ -1,6 +1,7 @@
 "use client"
 
 import { memo, useCallback, useState } from "react"
+import { useTranslation } from 'react-i18next';
 import { ChevronDownIcon } from "lucide-react"
 import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
@@ -25,6 +26,7 @@ interface DatePickerProps {
 
 const DatePicker = ({ value, onChange, name, label, className, disabled }: DatePickerProps) => {
     const [open, setOpen] = useState(false)
+    const { t } = useTranslation();
 
     const handleChange = useCallback((date: Date) => {
         onChange?.(name, format(date, "yyyy-MM-dd"))
@@ -36,7 +38,7 @@ const DatePicker = ({ value, onChange, name, label, className, disabled }: DateP
             className
         )}>
             <Label htmlFor="date" className="px-1">
-                {label}
+                {t(label)}
             </Label>
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>

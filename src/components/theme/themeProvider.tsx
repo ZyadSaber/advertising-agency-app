@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { type Theme, getTheme, setTheme } from "@/lib/theme";
+import '@/lib/i18n';
 import { ThemeProviderContext } from "./constants"
 import { ThemeProviderProps } from "./interface"
 

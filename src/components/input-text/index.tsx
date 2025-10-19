@@ -1,4 +1,5 @@
 import { memo, useCallback } from "react"
+import { useTranslation } from 'react-i18next';
 import Input from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
@@ -28,18 +29,18 @@ const InputText = ({
     required,
     placeholder
 }: InputTextProps) => {
-
+    const { t } = useTranslation();
     const handleChange = useCallback(event => {
         onChange(name, event?.target?.value)
     }, [name, onChange])
 
     return (
         <div className={cn(
-            "grid gap-3 relative",
+            "grid gap-2 relative",
             className
         )}>
             <Label htmlFor={name} className="text-sm font-medium">
-                {label}
+                {t(label || "")}
             </Label>
             <div className="relative">
                 {icon}
@@ -49,7 +50,7 @@ const InputText = ({
                     value={value}
                     onChange={handleChange}
                     className={
-                        cn(icon ? "pl-10" : "", "h-11 bg-white/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-blue-400")
+                        cn(icon ? "pl-10" : "", "h-9 bg-white/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-blue-400")
                     }
                     required={required}
                     disabled={disabled}

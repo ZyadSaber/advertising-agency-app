@@ -11,7 +11,7 @@ const DownloadButton = ({ url: dd, ...params }: any) => {
                     const percentCompleted = Math.round(
                         (progressEvent.loaded * 100) / (progressEvent.total || 1)
                     );
-                    console.log(`Download progress: ${percentCompleted}%`);
+                    // console.log(`Download progress: ${percentCompleted}%`);
                     // Update progress bar in your UI if needed
                 },
             });

@@ -23,9 +23,17 @@ export interface SharedTableProps {
   renderExpanded?: (record: RecordWithAnyValue) => React.ReactNode;
   rowKey: string;
   isLoading?: boolean;
+  actionColumnsWidth?: number;
 }
 
 export interface BaseTableProps extends SharedTableProps {
   isLoading?: boolean;
   dataSource: RecordWithAnyValue[];
+  hasNextPage?: boolean;
+  hasPrevPage?: boolean;
+  currentPage?: number;
+  totalPages?: number;
+  onPressNext?: () => void;
+  onPressPrevious?: () => void;
+  hidePagination?: boolean;
 }

@@ -5,9 +5,11 @@ import Image from "next/image";
 import { AxiosError } from "axios";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslation } from 'react-i18next';
 import { Mail, ArrowRight } from "lucide-react";
 import PasswordField from "@/components/password-field";
 import { ThemeToggle } from "@/components/theme/themeToggle";
+import LanguageToggle from "@/components/language-toggle"
 import InputText from "@/components/input-text"
 import useFormManager from "@/hooks/useFormManager";
 import useAuth from "@/components/auth/hooks/useAuth";
@@ -20,6 +22,8 @@ interface ErrorResponse {
 const HomePage = () => {
   const { refetch, disableLogin } = useAuth();
   const [error, setError] = useState<string | null>(null)
+
+  const { t } = useTranslation();
 
   const {
     values: {
@@ -64,28 +68,29 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4 relative">
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex gap-3">
         <ThemeToggle />
+        <LanguageToggle />
       </div>
 
       <div className="w-full max-w-md">
         <div className="text-center mb-8 flex flex-col gap-2.5 items-center">
           <Image src="/logo.png" alt="logo" width={100} height={100} />
           <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-            Welcome Back
+            {t('wlcmbck')}
           </h1>
           <p className="text-slate-600 dark:text-slate-400">
-            Sign in to your account to continue
+            {t('sgnintoyracnttocntn')}
           </p>
         </div>
 
         <Card className="shadow-xl border-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-2xl font-semibold text-center">
-              Sign In
+              {t('sgnin')}
             </CardTitle>
             <CardDescription className="text-center">
-              Enter your credentials below to access your account
+              {t('entryrcrdntlsblwtoacsyracnt')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -95,7 +100,7 @@ const HomePage = () => {
                 name="user_name"
                 value={user_name}
                 onChange={handleChange}
-                label="User Name"
+                label="usrnm"
                 className="w-full"
                 icon={<Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />}
                 placeholder="Enter your user name"
@@ -107,7 +112,7 @@ const HomePage = () => {
                 name="password"
                 value={password}
                 onChange={handleChange}
-                label="Password"
+                label="pswrd"
                 className="w-full"
                 placeholder="Enter your password"
                 disabled={fieldsDisabled}
@@ -128,11 +133,11 @@ const HomePage = () => {
                 {isLoading ? (
                   <div className="flex items-center space-x-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Signing in...</span>
+                    <span>{t("ldng")}...</span>
                   </div>
                 ) : (
                   <div className="flex items-center space-x-2">
-                    <span>Sign In</span>
+                    <span>{t("sgnin")}</span>
                     <ArrowRight className="h-4 w-4" />
                   </div>
                 )}

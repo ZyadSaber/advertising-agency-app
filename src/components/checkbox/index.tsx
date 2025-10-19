@@ -1,43 +1,37 @@
 import { useCallback } from "react"
 import { Checkbox as StyledCheckbox } from "@/components/ui/checkbox"
+import { useTranslation } from 'react-i18next';
 import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils";
 
 interface CheckboxProps {
     name?: string;
-    value: string;
-    onChange?: (name: string, value: string) => void;
+    checked: boolean;
+    onChange?: (name: string, value: boolean) => void;
     disabled?: boolean;
     label?: string;
     className?: string;
-    type?: string;
-    required?: boolean;
-    placeholder?: string;
-    icon?: React.ReactNode;
 }
 
 const Checkbox = (
     {
         name,
-        value,
+        checked,
         onChange,
         disabled,
         label,
         className,
-        type,
-        icon,
-        required,
-        placeholder
     }: CheckboxProps
 ) => {
-
-    const handleChange = useCallback(event => {
-        onChange(name, event?.target?.value)
+    const { t } = useTranslation();
+    const handleChange = useCallback((event: boolean) => {
+        onChange(name, event)
     }, [name, onChange])
 
     return (
-        <div className="flex items-center mb-1.5 gap-2">
-            <StyledCheckbox id={name} />
-            <Label className="text-[18px] font-light" htmlFor={name}>{label}</Label>
+        <div className={cn("flex items-center mb-1.5 gap-2", className)}>
+            <StyledCheckbox id={name} disabled={disabled} onCheckedChange={handleChange} checked={checked} />
+            <Label className="text-[18px] font-light" htmlFor={name}>{t(label || "")}</Label>
         </div>
     )
 }

@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, Fragment } from "react"
 import { ChevronRight, ChevronDown, Expand } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 import {
     Table,
     TableHeader,
@@ -10,9 +11,19 @@ import {
     TableHead,
     TableCell
 } from "@/components/ui/table";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination"
 import LoadingSpinner from "@/components/loading-spinner"
 import { Button } from "@/components/ui/button";
 import { RecordWithAnyValue } from "@/interfaces/global";
+import isArrayHasData from "@/lib/isArrayHasData"
 import { BaseTableProps } from "./interface"
 import generateFixedColumns from "./helpers/generateFixedColumns";
 import useBoundingClientRef from "./hooks/useBoundingClientRef";
@@ -27,9 +38,18 @@ const BaseTable = ({
     handleDelete,
     actionButtons,
     rowKey,
-    renderExpanded
-}: BaseTableProps) => {
+    renderExpanded,
+    actionColumnsWidth = 120,
+    hasNextPage,
+    hasPrevPage,
+    currentPage = 1,
+    totalPages,
+    onPressNext,
+    onPressPrevious,
+    hidePagination
 
+}: BaseTableProps) => {
+    const { t } = useTranslation();
     const [expanded, setExpanded] = useState<number | string>(undefined);
     const [ref, rect] = useBoundingClientRef();
 
@@ -55,13 +75,13 @@ const BaseTable = ({
         <>
             <div className="w-full text-center" ref={ref}>
                 <Button className="p-2 cursor-pointer" variant="default" onClick={onClickOpen} disabled={isLoading}>
-                    {AddButtonLabel}
+                    {t(AddButtonLabel || "addnew")}
                 </Button>
             </div>
             <div className="rounded-lg overflow-x-auto border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 shadow-2xl mt-8">
                 <Table className="table-fixed">
                     <TableHeader>
-                        <TableRow className="backdrop-blur-md bg-white/70 dark:bg-slate-900/70 sticky top-0 z-10">
+                        <TableRow className=" bg-white/70 dark:bg-slate-900/70 sticky top-0 z-10">
                             {renderExpanded &&
                                 <TableHead className="w-[50px]" >
                                     <Expand />
@@ -70,9 +90,11 @@ const BaseTable = ({
                             {adjustedColumns.map((col, index) => (
                                 <TableHead style={{
                                     width: `${col.width}px`
-                                }} key={index}>{col.label}</TableHead>
+                                }} key={index}>{t(col.label || "")}</TableHead>
                             ))}
-                            <TableHead>Actions</TableHead>
+                            <TableHead style={{
+                                width: `${actionColumnsWidth}px`
+                            }}>{t("actns")}</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -84,8 +106,7 @@ const BaseTable = ({
                                     </div>
                                 </TableCell>
                             </TableRow>
-                            :
-                            dataSource.map((record: RecordWithAnyValue, index: number) => (
+                            : isArrayHasData(dataSource) ? dataSource.map((record: RecordWithAnyValue, index: number) => (
                                 <Fragment key={index}>
                                     <TableRow
                                         className={
@@ -107,12 +128,12 @@ const BaseTable = ({
                                             </TableCell>
                                         ))}
                                         <TableCell>
-                                            <div className="flex gap-2">
+                                            <div className="flex gap-2 justify-center w-full wrap">
                                                 <Button disabled={isLoading} className="p-2 cursor-pointer" variant="default" onClick={() => handleEdit?.(record)}>
-                                                    Edit
+                                                    {t("edt")}
                                                 </Button>
                                                 <Button disabled={isLoading} className="p-2 cursor-pointer" variant="destructive" onClick={() => handleDelete?.(record)}>
-                                                    Delete
+                                                    {t("dlt")}
                                                 </Button>
                                                 {actionButtons?.map(({ title, type, onClick }, index) => (
                                                     <Button key={index} className="p-2 cursor-pointer" variant={type} onClick={() => onClick?.(record)}>
@@ -130,10 +151,42 @@ const BaseTable = ({
                                         </TableRow>
                                     )}
                                 </Fragment>
-                            ))}
+                            )) : undefined
+                        }
                     </TableBody>
                 </Table>
             </div>
+            {isArrayHasData(dataSource) && !hidePagination &&
+                <Pagination className="mt-2">
+                    <PaginationContent>
+                        {hasPrevPage &&
+                            <>
+                                <PaginationItem>
+                                    <PaginationPrevious onClick={onPressPrevious} />
+                                </PaginationItem>
+                                <PaginationLink onClick={onPressPrevious}>{currentPage - 1}</PaginationLink>
+                            </>
+                        }
+                        <PaginationItem>
+                            <PaginationLink isActive>{currentPage}</PaginationLink>
+                        </PaginationItem>
+                        {hasNextPage &&
+                            <>
+                                <PaginationItem>
+                                    <PaginationLink onClick={onPressNext}>{currentPage + 1}</PaginationLink>
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <PaginationEllipsis />
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <PaginationNext onClick={onPressNext} />
+                                </PaginationItem>
+                            </>
+                        }
+                        {t("total")}: {totalPages || dataSource?.length}
+                    </PaginationContent>
+                </Pagination>
+            }
         </>
     )
 }

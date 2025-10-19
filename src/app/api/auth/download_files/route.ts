@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
     }
 
     const filePath = path.join(process.cwd(), filename);
-    console.log(filePath);
+    // console.log(filePath);
 
     // Verify file exists
     if (!existsSync(filePath)) {
