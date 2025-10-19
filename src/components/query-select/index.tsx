@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import Select, { SharedSelectProps, OptionType } from "@/components/select"
 import useFetch from "@/hooks/useFetch";
-import { RecordWithAnyValue } from "@/interfaces/global"
 
 interface QuerySelectProps extends SharedSelectProps {
     endPoint: string;

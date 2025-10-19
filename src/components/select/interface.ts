@@ -6,7 +6,7 @@ export interface OptionType extends RecordWithAnyValue {
 }
 
 export interface SharedSelectProps {
-  onChange?: (name: string, value: string) => void;
+  onChange?: (name: string, value: string, option?: RecordWithAnyValue) => void;
   name?: string;
   value: string;
   disabled?: boolean;

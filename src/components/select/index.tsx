@@ -41,10 +41,10 @@ const SelectView = ({
     }, [options, searchTerm, searchable]);
 
     const handleChange = useCallback((value: string) => {
-        onChange(name, value)
+        onChange(name, value, options.filter(({ key }) => key === value)[0])
         setSearchTerm("")
         setIsOpen(false)
-    }, [name, onChange])
+    }, [name, onChange, options])
 
     const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value)

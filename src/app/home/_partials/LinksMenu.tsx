@@ -2,7 +2,7 @@ import { memo } from "react"
 import Link from "next/link";
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { User, LayoutList, ClipboardMinus, BookUser, CircleUserRound } from "lucide-react";
+import { User, LayoutList, ShoppingBag, BadgeDollarSign, CircleUserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const LinksMenu = () => {
@@ -32,30 +32,18 @@ const LinksMenu = () => {
                             {t("itms")}
                         </Button>
                     </Link>
-                    {/* <Link href="tickets">
+                    <Link href="/purchaseInvoice">
                         <Button variant="outline" className="h-12 w-full cursor-pointer">
-                            <Ticket className="h-4 w-4 mr-2" />
-                            All Tickets
+                            <ShoppingBag className="h-4 w-4 mr-2" />
+                            {t("prchsinvc")}
                         </Button>
                     </Link>
-                    <Link href="tickets/reports">
+                    <Link href="/salesInvoice">
                         <Button variant="outline" className="h-12 w-full cursor-pointer">
-                            <ClipboardMinus className="h-4 w-4 mr-2" />
-                            Tickets Report
+                            <BadgeDollarSign className="h-4 w-4 mr-2" />
+                            {t("slsinvc")}
                         </Button>
                     </Link>
-                    <Link href="users">
-                        <Button variant="outline" className="h-12 w-full cursor-pointer">
-                            <CircleUserRound className="h-4 w-4 mr-2" />
-                            Users
-                        </Button>
-                    </Link>
-                    <Link href="clients">
-                        <Button variant="outline" className="h-12 w-full cursor-pointer">
-                            <BookUser className="h-4 w-4 mr-2" />
-                            Clients
-                        </Button>
-                    </Link> */}
                 </div>
             </CardContent>
         </Card>

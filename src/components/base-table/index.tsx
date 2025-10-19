@@ -47,7 +47,6 @@ const BaseTable = ({
     onPressNext,
     onPressPrevious,
     hidePagination
-
 }: BaseTableProps) => {
     const { t } = useTranslation();
     const [expanded, setExpanded] = useState<number | string>(undefined);
