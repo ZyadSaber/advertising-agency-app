@@ -46,7 +46,8 @@ const BaseTable = ({
     totalPages,
     onPressNext,
     onPressPrevious,
-    hidePagination
+    hidePagination,
+    canEdit = true
 }: BaseTableProps) => {
     const { t } = useTranslation();
     const [expanded, setExpanded] = useState<number | string>(undefined);
@@ -128,9 +129,9 @@ const BaseTable = ({
                                         ))}
                                         <TableCell>
                                             <div className="flex gap-2 justify-center w-full wrap">
-                                                <Button disabled={isLoading} className="p-2 cursor-pointer" variant="default" onClick={() => handleEdit?.(record)}>
+                                                {canEdit && <Button disabled={isLoading} className="p-2 cursor-pointer" variant="default" onClick={() => handleEdit?.(record)}>
                                                     {t("edt")}
-                                                </Button>
+                                                </Button>}
                                                 <Button disabled={isLoading} className="p-2 cursor-pointer" variant="destructive" onClick={() => handleDelete?.(record)}>
                                                     {t("dlt")}
                                                 </Button>

@@ -39,7 +39,7 @@ const InputNumber = ({
         const inputValue = event.target.value;
 
         if (inputValue === '') {
-            onChange?.(name, '');
+            onChange?.(name || '', '');
             return;
         }
 
@@ -57,9 +57,9 @@ const InputNumber = ({
             }
 
             if (constrainedValue === numValue) {
-                onChange?.(name, inputValue);
+                onChange?.(name || '', inputValue);
             } else {
-                onChange?.(name, constrainedValue.toString());
+                onChange?.(name || '', constrainedValue.toString());
             }
         }
     }, [name, onChange, min, max]);
@@ -80,7 +80,7 @@ const InputNumber = ({
             }
 
             if (constrainedValue !== numValue) {
-                onChange?.(name, constrainedValue.toString());
+                onChange?.(name || '', constrainedValue.toString());
             }
         }
     }, [name, onChange, min, max]);
@@ -98,7 +98,7 @@ const InputNumber = ({
                 <Input
                     id={name}
                     placeholder={placeholder}
-                    value={+value}
+                    value={value.toString()}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     className={

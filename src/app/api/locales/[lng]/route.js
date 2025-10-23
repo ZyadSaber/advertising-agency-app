@@ -51,6 +51,12 @@ const locales = {
     ttlprc: "Total Price",
     nts: "Notes",
     invcdt: "Invoice Date",
+    dscnt: "Discount",
+    ttlinvc: "Total Invoice",
+    ttlinvcaftrdscnt: "Total after discount",
+    paid: "Paid",
+    crdt: "Credit",
+    vldtflds: "Validate Fields",
   },
   ar: {
     wlcmbck: "مرحبا بك",
@@ -100,6 +106,12 @@ const locales = {
     ttlprc: "السعر الاجمالي",
     nts: "ملاحظات",
     invcdt: "تاريخ الفاتورة",
+    dscnt: "الخصم",
+    ttlinvc: "اجمالي الفاتورة",
+    ttlinvcaftrdscnt: "الاجمالي بعد الخصم",
+    paid: "مدفوع",
+    crdt: "اجل",
+    vldtflds: "تحقق من المدخلات",
   },
 };
 

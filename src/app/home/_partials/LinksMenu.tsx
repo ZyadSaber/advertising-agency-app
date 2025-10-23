@@ -32,13 +32,13 @@ const LinksMenu = () => {
                             {t("itms")}
                         </Button>
                     </Link>
-                    <Link href="/purchaseInvoice">
+                    <Link href="/invoice/S">
                         <Button variant="outline" className="h-12 w-full cursor-pointer">
                             <ShoppingBag className="h-4 w-4 mr-2" />
                             {t("prchsinvc")}
                         </Button>
                     </Link>
-                    <Link href="/salesInvoice">
+                    <Link href="/invoice/C">
                         <Button variant="outline" className="h-12 w-full cursor-pointer">
                             <BadgeDollarSign className="h-4 w-4 mr-2" />
                             {t("slsinvc")}

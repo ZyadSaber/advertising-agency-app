@@ -24,6 +24,7 @@ export interface SharedTableProps {
   rowKey: string;
   isLoading?: boolean;
   actionColumnsWidth?: number;
+  canEdit?: boolean;
 }
 
 export interface BaseTableProps extends SharedTableProps {

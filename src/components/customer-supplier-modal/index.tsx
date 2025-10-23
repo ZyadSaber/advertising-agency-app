@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 import api from "@/lib/axios";
 
 interface CustomerSupplierModalProps {
-    selectedRecord: RecordWithAnyValue;
+    selectedRecord?: RecordWithAnyValue;
     isOpen: boolean;
     type: "C" | "S";
     handleClose: () => void;
@@ -39,7 +39,10 @@ const CustomerSupplierModal = ({
         },
         handleChange
     } = useFormManager({
-        initialValues: selectedRecord
+        initialValues: {
+            ...selectedRecord,
+            record_status: "n"
+        }
     })
 
     const handleSave = useCallback(async () => {
