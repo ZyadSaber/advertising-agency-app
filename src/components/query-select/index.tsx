@@ -1,4 +1,4 @@
-import { useCallback, useImperativeHandle, useState } from "react";
+import { memo, forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import Select, { SharedSelectProps, OptionType } from "@/components/select"
 import useFetch from "@/hooks/useFetch";
 import { RecordWithAnyValue } from "@/interfaces/global";
@@ -43,5 +43,5 @@ const QuerySelect = (
     )
 }
 
-export default QuerySelect
+export default memo(forwardRef(QuerySelect))
 export { default as useSelectValuesRef } from "./hooks/useSelectValuesRef"
