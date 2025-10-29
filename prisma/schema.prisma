@@ -36,6 +36,9 @@ model customers_information {
   active           Boolean? @default(true)
   created_at       DateTime @default(now())
   updated_at       DateTime @updatedAt
+
+  // Relations
+  sales_invoices sales_invoice[]
 }
 
 model suppliers_information {
@@ -56,6 +59,7 @@ model items_information {
 
   // Relations
   purchase_invoice_details purchase_invoice_details[]
+  sales_invoice_details    sales_invoice_details[]
 }
 
 model purchase_invoice {
@@ -68,6 +72,7 @@ model purchase_invoice {
   discount             Decimal?
   total_after_discount Decimal
   paid                 Decimal?
+  bank                 Decimal?
   unpaid               Decimal?
 
   // Relations
@@ -94,6 +99,49 @@ model purchase_invoice_details {
 
   // Relations
   invoice purchase_invoice  @relation(fields: [invoice_no], references: [invoice_no])
+  item    items_information @relation(fields: [item_no], references: [item_id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model sales_invoice {
+  invoice_no    Int      @id @default(autoincrement())
+  invoice_date  DateTime
+  invoice_notes String?
+  customer_id   Int
+
+  total_invoice        Decimal
+  discount             Decimal?
+  total_after_discount Decimal
+  paid                 Decimal?
+  bank                 Decimal?
+  unpaid               Decimal?
+
+  // Relations
+  customer customers_information   @relation(fields: [customer_id], references: [customer_id])
+  details  sales_invoice_details[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model sales_invoice_details {
+  detail_invoice_no Int @id @default(autoincrement())
+  invoice_no        Int
+
+  item_no     Int
+  width       Decimal
+  height      Decimal
+  space       Decimal
+  quantity    Decimal
+  all_space   Decimal
+  price       Decimal
+  total_price Decimal
+  notes       String?
+
+  // Relations
+  invoice sales_invoice     @relation(fields: [invoice_no], references: [invoice_no])
   item    items_information @relation(fields: [item_no], references: [item_id])
 
   created_at DateTime @default(now())

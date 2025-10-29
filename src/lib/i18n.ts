@@ -14,7 +14,7 @@ i18n
   .use(initReactI18next)
   // Initialize i18next
   .init({
-    fallbackLng: "en", // Use 'en' if detected language is not available
+    fallbackLng: "ar", // Use 'en' if detected language is not available
     defaultNS: "common",
     debug: process.env.NODE_ENV === "development", // Enable debug output in development
 

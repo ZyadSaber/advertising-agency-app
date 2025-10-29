@@ -30,12 +30,13 @@ export const INITIAL_VALUES = {
   discount: 0,
   notes: "",
   paid: 0,
+  bank: 0,
 };
 
 export const INVOICE_DETAILS_COLUMNS = [
   {
     label: "id",
-    dataIndex: "item_id",
+    dataIndex: "item_no",
     width: "5%",
   },
   {

@@ -1,8 +1,8 @@
 import { memo } from "react"
 import Link from "next/link";
 import { useTranslation } from 'react-i18next';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { User, LayoutList, ShoppingBag, BadgeDollarSign, CircleUserRound } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { User, LayoutList, ShoppingBag, BadgeDollarSign, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const LinksMenu = () => {
@@ -42,6 +42,12 @@ const LinksMenu = () => {
                         <Button variant="outline" className="h-12 w-full cursor-pointer">
                             <BadgeDollarSign className="h-4 w-4 mr-2" />
                             {t("slsinvc")}
+                        </Button>
+                    </Link>
+                    <Link href="/invoiceSearch">
+                        <Button variant="outline" className="h-12 w-full cursor-pointer">
+                            <Search className="h-4 w-4 mr-2" />
+                            {t("invcsrch")}
                         </Button>
                     </Link>
                 </div>

@@ -57,6 +57,8 @@ const locales = {
     paid: "Paid",
     crdt: "Credit",
     vldtflds: "Validate Fields",
+    bnk: "bank",
+    invcsrch: "Invoice search",
   },
   ar: {
     wlcmbck: "مرحبا بك",
@@ -112,6 +114,8 @@ const locales = {
     paid: "مدفوع",
     crdt: "اجل",
     vldtflds: "تحقق من المدخلات",
+    bnk: "بنك",
+    invcsrch: "بحث الفواتير",
   },
 };
 

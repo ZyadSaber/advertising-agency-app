@@ -32,7 +32,7 @@ const PurchaseInvoice = () => {
         values,
         handleChange,
         handleChangeMultiInputs,
-        resetValues
+        resetValues,
     } = useFormManager({
         initialValues: INITIAL_VALUES
     })
@@ -51,7 +51,8 @@ const PurchaseInvoice = () => {
         item_name,
         discount,
         notes,
-        paid
+        paid,
+        bank
     } = values
 
     const spaceValue = useMemo(() => +width * +height, [height, width])
@@ -60,7 +61,7 @@ const PurchaseInvoice = () => {
 
     const invoiceTotal = useMemo(() => invoiceDetails.reduce((accumulator: number, currentObject: RecordWithAnyValue) => accumulator + currentObject.total_price, 0), [invoiceDetails])
     const invoiceTotalAfterDiscount = useMemo(() => invoiceTotal - discount, [discount, invoiceTotal])
-    const creditAmount = useMemo(() => invoiceTotalAfterDiscount - paid, [invoiceTotalAfterDiscount, paid])
+    const creditAmount = useMemo(() => invoiceTotalAfterDiscount - (+paid + +bank), [bank, invoiceTotalAfterDiscount, paid])
 
     const handleChangeItemValue = useCallback((name: string, value: string, record: RecordWithAnyValue) => {
         handleChangeMultiInputs({
@@ -119,7 +120,8 @@ const PurchaseInvoice = () => {
                     total_after_discount: invoiceTotalAfterDiscount,
                     paid,
                     unpaid: creditAmount,
-                    invoiceDetails
+                    invoiceDetails,
+                    bank
                 });
                 resetValues()
                 toast.success("Success")
@@ -129,7 +131,7 @@ const PurchaseInvoice = () => {
         } else {
             toast.error(t("vldtflds"))
         }
-    }, [creditAmount, customer_id, discount, invoiceDetails, invoiceTotal, invoiceTotalAfterDiscount, invoice_date, invoice_notes, paid, resetValues, supplier_id, t])
+    }, [bank, creditAmount, customer_id, discount, invoiceDetails, invoiceTotal, invoiceTotalAfterDiscount, invoice_date, invoice_notes, paid, resetValues, supplier_id, t])
 
     const handleSaveNewCustomerOrSupplier = useCallback(({ id, name }) => {
         fetchSelectOptions()
@@ -167,7 +169,7 @@ const PurchaseInvoice = () => {
                         endPoint={listEndPoint}
                     />
                     <Button className="p-4 cursor-pointer" variant="default" onClick={handleOpen}>
-                        {t("add")}
+                        {t("addnew")}
                     </Button>
                     <InputText
                         value={invoice_notes}
@@ -283,7 +285,16 @@ const PurchaseInvoice = () => {
                                     onChange={handleChange}
                                     label="paid"
                                     className="w-[15%]"
-                                    max={invoiceTotalAfterDiscount}
+                                    max={invoiceTotalAfterDiscount - bank}
+                                    min={0}
+                                />
+                                <InputNumber
+                                    value={bank}
+                                    name="bank"
+                                    onChange={handleChange}
+                                    label="bnk"
+                                    className="w-[15%]"
+                                    max={invoiceTotalAfterDiscount - paid}
                                     min={0}
                                 />
                                 <InputNumber

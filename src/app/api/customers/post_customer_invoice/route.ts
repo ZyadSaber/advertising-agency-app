@@ -6,32 +6,34 @@ export async function POST(request: NextRequest) {
   try {
     const user = await getUserFromToken();
 
-    // if (!user) {
-    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    // }
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const {
       invoice_date,
       invoice_notes,
-      supplier_id,
+      customer_id,
       total_invoice,
       discount,
       total_after_discount,
       paid,
       unpaid,
+      bank,
       invoiceDetails,
     } = await request.json();
 
-    const { invoice_no } = await prisma.purchase_invoice.create({
+    const { invoice_no } = await prisma.sales_invoice.create({
       data: {
         invoice_date: new Date(invoice_date),
         invoice_notes,
-        supplier_id,
+        customer_id,
         total_invoice,
         discount,
         total_after_discount,
         paid,
         unpaid,
+        bank,
       },
     });
 
@@ -60,7 +62,7 @@ export async function POST(request: NextRequest) {
       })
     );
 
-    await prisma.purchase_invoice_details.createMany({
+    await prisma.sales_invoice_details.createMany({
       data: computedInvoiceDetails,
     });
 
