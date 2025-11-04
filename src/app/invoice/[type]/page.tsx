@@ -55,9 +55,9 @@ const PurchaseInvoice = () => {
         bank
     } = values
 
-    const spaceValue = useMemo(() => +width * +height, [height, width])
-    const allSpaceValue = useMemo(() => spaceValue * +quantity, [quantity, spaceValue])
-    const totalPriceValue = useMemo(() => allSpaceValue * +price, [allSpaceValue, price])
+    const spaceValue = useMemo(() => +(+width * +height).toFixed(2), [height, width])
+    const allSpaceValue = useMemo(() => +(spaceValue * +quantity).toFixed(2), [quantity, spaceValue])
+    const totalPriceValue = useMemo(() => +(allSpaceValue * +price).toFixed(2), [allSpaceValue, price])
 
     const invoiceTotal = useMemo(() => invoiceDetails.reduce((accumulator: number, currentObject: RecordWithAnyValue) => accumulator + currentObject.total_price, 0), [invoiceDetails])
     const invoiceTotalAfterDiscount = useMemo(() => invoiceTotal - discount, [discount, invoiceTotal])
